@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "937975774440",
+    "project_id": "iit-madras-mobinotes",
+    "storage_bucket": "iit-madras-mobinotes.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:937975774440:android:49297017ad418ba63ddd5d",
+        "android_client_info": {
+          "package_name": "com.example.myapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "937975774440-asgac5qvij2k0no342d3mcd52h4ngobb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.myapp",
+            "certificate_hash": "88042acb129b5a1c48bd3b9b7f4f2cde92e02d99"
+          }
+        },
+        {
+          "client_id": "937975774440-15ji9q8dqecfqh0643v6r91rbr1350tj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDANXIl7hVUTbmGdg4q8a4h4ftfSECZwxQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "937975774440-15ji9q8dqecfqh0643v6r91rbr1350tj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

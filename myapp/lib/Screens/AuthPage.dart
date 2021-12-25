@@ -2,10 +2,20 @@
 
 import 'package:flutter/material.dart';
 import 'package:myapp/Screens/CreateProfilePage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
-class AuthPage extends StatelessWidget {
-  const AuthPage({Key? key}) : super(key: key);
+class AuthPage extends StatefulWidget {
+  AuthPage({Key? key}) : super(key: key);
 
+  @override
+  _AuthPageState createState() => _AuthPageState();
+}
+
+class _AuthPageState extends State<AuthPage> {
+  FirebaseAuth auth = FirebaseAuth.instance;
+  GoogleSignIn googleSignIn = new GoogleSignIn();
+  late GoogleSignInAccount signedAccount;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,10 +69,44 @@ class AuthPage extends StatelessWidget {
                           MaterialStateProperty.all(Color(0xffd5a54e)),
                       shape: MaterialStateProperty.all(RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20)))),
-                  onPressed: () {
+                  onPressed: () async {
+                    await googleSignIn.signOut();
+                    try {
+                      signedAccount = (await googleSignIn.signIn())!;
+                      if (signedAccount != null) {
+                        debugPrint("Authentication sucessful");
+                        print('signed in from ${signedAccount.email}');
+                        GoogleSignInAuthentication gauth =
+                            await signedAccount.authentication;
+                        final AuthCredential credential =
+                            GoogleAuthProvider.credential(
+                          accessToken: gauth.accessToken,
+                          idToken: gauth.idToken,
+                        );
+                        UserCredential login =
+                            await auth.signInWithCredential(credential);
+                        if (login.user != null) {
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => CreateProfilePage()));
+                        }
+                      } else {
+                        await googleSignIn.signOut();
+                        await auth.signOut();
+                      }
+                    } catch (error) {
+                      print(error);
+                    }
+                    ;
+
+                    signedAccount = (await googleSignIn.signIn())!;
+                    if (signedAccount != null) {
+                      debugPrint("Authentication sucessful");
+                    } else {
+                      debugPrint("Authentication failed");
+                    }
                     // todo add google signin logic
-                    Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (_) => CreateProfilePage()));
                   },
                   child: Text("Google sign In"),
                 ),
